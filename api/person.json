@@ -1,0 +1,49 @@
+{
+  "person": [
+    {
+      "name": "Bora",
+      "surname": "Kasmer",
+      "age": "44",
+      "products": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "id": 1
+    },
+    {
+      "name": "Bill",
+      "surname": "Gates",
+      "age": "60",
+      "products": [
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+      ],
+      "id": 2
+    },
+    {
+      "name": "Martin",
+      "surname": "Fowler",
+      "age": "52",
+      "products": [
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        }
+      ],
+      "id": 3
+    }
+  ]
+}
