@@ -2,15 +2,15 @@
   "products": [
     {
       "name": "Macbook Pro 16",
+      "price": "85000",
       "category": "Laptop",
-      "price": "80000",
       "id": 1
     },
     {
-      "id": 2,
-      "name": "Iphone 13 Pro Max",
-      "price": "30000",
-      "category": "Phone"
+      "name": "Iphone 14 Pro Max",
+      "price": "40000",
+      "category": "Phone",
+      "id": 2
     },
     {
       "id": 3,
@@ -29,12 +29,6 @@
       "name": "Magic Keyboard",
       "price": "1250",
       "category": "Computer Attachment"
-    },
-    {
-      "name": "a",
-      "price": "c",
-      "category": "b",
-      "id": 6
     }
   ]
 }

@@ -1,9 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {HttpGet, HttpInsert} from "../service/coreService";
+import {HttpGet, HttpInsert, HttpUpdate} from "../service/coreService";
 
 function ProductForm(props) {
     const id = props.id
-    const onIdChange=props.onIdChange
+    const dispatch = props.dispatch
+    const onIdChange = props.onIdChange
     const [error, setError] = useState()
     const [nameValue, setNameValue] = useState('')
     const [priceValue, setPriceValue] = useState('')
@@ -15,10 +16,10 @@ function ProductForm(props) {
 
     }, [])
 
-    useEffect(()=>{
-        if(id !== null){
-            HttpGet(`products/${id}`).then(result=>{
-                const {name, price, category, id} =  result.data
+    useEffect(() => {
+        if (id != null) {
+            HttpGet(`products/${id}`).then(result => {
+                const {name, price, category, id} = result.data
                 setNameValue(name)
                 setPriceValue(price)
                 setCategoryValue(category)
@@ -27,30 +28,38 @@ function ProductForm(props) {
     }, [id])
 
     const SaveProduct = () => {
-        if(valideteForm()){
+        if (valideteForm()) {
             setError(false)
-
-            if(id == null){
-               
-                let data = {
-                    name:nameValue,
-                    price:priceValue,
-                    category:categoryValue
-                }
-                HttpInsert(`products`,data).then(response =>{
-                    console.log("inserted product id: "+response.data.id)
+            let data = {
+                name: nameValue,
+                price: priceValue,
+                category: categoryValue
+            }
+            if (id == null) {
+                HttpInsert(`products`, data).then(response => {
+                    dispatch({
+                        type: "ADD_PRODUCT",
+                        payload: response.data
+                    })
+                    console.log("inserted product id: " + response.data.id)
                     Cancel()
                 })
             } else {
-
+                HttpUpdate(`products/${id}`, data).then(response => {
+                    dispatch({
+                        type: "UPDATE_PRODUCT",
+                        payload: response.data
+                    });
+                    Cancel()
+                })
             }
         } else {
             setError(true)
         }
     }
 
-    const valideteForm = () =>{
-        if(nameValue === "" || categoryValue === "" || priceValue === ""){
+    const valideteForm = () => {
+        if (nameValue === "" || categoryValue === "" || priceValue === "") {
             return false
         } else {
             return true
@@ -62,6 +71,7 @@ function ProductForm(props) {
         setPriceValue('')
         setCategoryValue('')
         inputRef.current.focus()
+        onIdChange(null)
     }
 
     const handleChange = (e) => {
@@ -117,7 +127,6 @@ function ProductForm(props) {
                                        value={categoryValue}
                                        className="form-control"
                                        placeholder="kategori ismi"
-
                                        onChange={handleChange}
                                 />
                             </div>
@@ -130,7 +139,6 @@ function ProductForm(props) {
                                        value={priceValue}
                                        className="form-control"
                                        placeholder="fiyat ismi"
-
                                        onChange={handleChange}
                                 />
                             </div>
@@ -139,11 +147,11 @@ function ProductForm(props) {
                                         onClick={() => SaveProduct()}
                                 >
                                     {
-                                        id !== null ? "Kaydet" : "Guncelle"
+                                        id == null ? "Kaydet" : "Guncelle"
                                     }
                                 </button>
                                 <button type="button" className="btn btn-success btn-secondary"
-                                        onClick={()=>Cancel()}
+                                        onClick={() => Cancel()}
                                 >
                                     Iptal
                                 </button>
