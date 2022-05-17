@@ -2,8 +2,8 @@
   "products": [
     {
       "name": "Macbook Pro 16",
-      "price": "85000",
-      "category": "Laptop",
+      "price": "72500",
+      "category": "LapTop",
       "id": 1
     },
     {

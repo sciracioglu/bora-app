@@ -142,17 +142,17 @@ function ProductForm(props) {
                                        onChange={handleChange}
                                 />
                             </div>
-                            <div className="btn-group btn-group-lg" aria-label="ProductForm Group Button">
-                                <button type="button" className="btn btn-danger btn-secondary"
+                            <div className="btn-group btn-group-lg mt-4" aria-label="ProductForm Group Button">
+                                <button type="button" className="btn btn-success"
                                         onClick={() => SaveProduct()}
-                                >
+                                ><i className="fa-regular fa-floppy-disk m-2"></i>
                                     {
                                         id == null ? "Kaydet" : "Guncelle"
                                     }
                                 </button>
-                                <button type="button" className="btn btn-success btn-secondary"
+                                <button type="button" className="btn btn-danger"
                                         onClick={() => Cancel()}
-                                >
+                                ><i className="fa-regular fa-rectangle-xmark m-2"></i>
                                     Iptal
                                 </button>
                             </div>
