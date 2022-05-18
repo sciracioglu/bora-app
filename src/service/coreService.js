@@ -51,6 +51,17 @@ const HttpUpdate = async (url, data) =>{
     }
 }
 
+const HttpUpdate2 = async (url, data) =>{
+    try{
+        let response = await axios.put(baseUrl2 + url, data)
+
+        return response
+    } catch (err){
+        console.log(err)
+        throw new Error("Unable to update data to user service!")
+    }
+}
+
 const HttpDelete = async (url, id) =>{
     try{
         let response = await axios.delete(baseUrl + url+`/${id}`)
@@ -62,4 +73,10 @@ const HttpDelete = async (url, id) =>{
     }
 }
 
-export {HttpGet, HttpGet2, HttpInsert, HttpUpdate, HttpDelete}
+const Compare = (a, b) =>{
+    const aPrice = Number(a.price.replace(/[^0-9.-]+/g, ""));
+    const bPrice = Number(b.price.replace(/[^0-9.-]+/g, ""));
+    return aPrice-bPrice
+}
+
+export {HttpGet, HttpGet2, HttpInsert, HttpUpdate, HttpUpdate2, HttpDelete, Compare}
