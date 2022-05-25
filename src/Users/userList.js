@@ -5,6 +5,7 @@ import {UserContext} from "./userContext";
 import {HttpGet} from "../service/coreService";
 
 function UserList(props) {
+    const [userId, setUserId] = useState()
     const [state, dispatch] = useContext(UserContext)
     const [allProductList, setAllProductList] = useState()
     useEffect(() => {
@@ -21,7 +22,9 @@ function UserList(props) {
 
     return (
         <div>
-            <UserForm/>
+            <UserForm  onIdChange={e=>{
+                setUserId(e)
+            }} id={userId} dispatch={dispatch}/>
             {
                 state.users.map(item => (
                     <User
@@ -33,6 +36,9 @@ function UserList(props) {
                         products={item.products}
                         dispatch={dispatch}
                         allProductList={allProductList}
+                        onIdChange={e=>{
+                            setUserId(e)
+                        }}
                     />
                 ))
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Modal from "../modal";
-import {HttpDelete} from "../service/coreService";
+import {HttpDelete, HttpGet2, HttpUpdate2} from "../service/coreService";
 
 const Product = (props) => {
     const {name, category, price, id, onIdChange, dispatch} = props
@@ -9,14 +9,32 @@ const Product = (props) => {
     }
     const [show, setShow] = useState(false)
     const delProduct = (id) => {
-        HttpDelete(`products`,id).then(result => {
-            dispatch({
-                type:"DELETE_PRODUCT",
-                payload:id
+        if (id != null) {
+            let personList = []
+            HttpGet2(`person`).then(response => {
+                personList = response.data
+                personList.forEach(person => {
+                    person.products.forEach(product => {
+                        if (product.id == id) {
+                            person.products = person.products.filter(prod => prod.id != id)
+                            HttpUpdate2(`person/${id}`, person).then(result => {
+                                return
+                            })
+                        }
+                    })
+                })
             })
-        }).catch(exception => {
-            console.log(exception)
-        });
+            HttpDelete(`products`, id).then(result => {
+                dispatch({
+                    type: "DELETE_PRODUCT",
+                    payload: id
+                })
+            }). catch(exception => {
+                console.log(exception)
+            });
+        }
+
+
     }
     return (
         <div className="col-mid-8 mb-4">

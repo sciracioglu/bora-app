@@ -44,6 +44,20 @@
         }
       ],
       "id": 3
+    },
+    {
+      "name": "Serkan",
+      "surname": "Ciracioglu",
+      "age": 20,
+      "id": 4,
+      "products": [
+        {
+          "id": 6
+        },
+        {
+          "id": 3
+        }
+      ]
     }
   ]
 }

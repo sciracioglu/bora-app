@@ -40,43 +40,64 @@ const HttpInsert = async (url, data) => {
     }
 }
 
-const HttpUpdate = async (url, data) =>{
-    try{
+const HttpInsert2 = async (url, data) => {
+    try {
+        let response = await axios.post(baseUrl2 + url, data)
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error("Unable to post data to user service!")
+    }
+}
+
+const HttpUpdate = async (url, data) => {
+    try {
         let response = await axios.put(baseUrl + url, data)
 
         return response
-    } catch (err){
+    } catch (err) {
         console.log(err)
         throw new Error("Unable to update data to product service!")
     }
 }
 
-const HttpUpdate2 = async (url, data) =>{
-    try{
+const HttpUpdate2 = async (url, data) => {
+    try {
         let response = await axios.put(baseUrl2 + url, data)
 
         return response
-    } catch (err){
+    } catch (err) {
         console.log(err)
         throw new Error("Unable to update data to user service!")
     }
 }
 
-const HttpDelete = async (url, id) =>{
-    try{
-        let response = await axios.delete(baseUrl + url+`/${id}`)
+const HttpDelete = async (url, id) => {
+    try {
+        let response = await axios.delete(baseUrl + url + `/${id}`)
 
         return response
-    } catch (err){
+    } catch (err) {
         console.log(err)
         throw new Error(`Unable to product delete data!`)
     }
 }
+const HttpDelete2 = async (url, id) => {
+    try {
+        let response = await axios.delete(baseUrl2 + url + `/${id}`)
 
-const Compare = (a, b) =>{
-    const aPrice = Number(a.price.replace(/[^0-9.-]+/g, ""));
-    const bPrice = Number(b.price.replace(/[^0-9.-]+/g, ""));
-    return aPrice-bPrice
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error(`Unable to product delete user!`)
+    }
 }
 
-export {HttpGet, HttpGet2, HttpInsert, HttpUpdate, HttpUpdate2, HttpDelete, Compare}
+const Compare = (a, b) => {
+    const aPrice = Number(a.price.replace(/[^0-9.-]+/g, ""));
+    const bPrice = Number(b.price.replace(/[^0-9.-]+/g, ""));
+    return aPrice - bPrice
+}
+
+export {HttpGet, HttpGet2, HttpInsert, HttpUpdate, HttpUpdate2, HttpDelete, HttpInsert2, HttpDelete2, Compare}

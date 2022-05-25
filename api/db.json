@@ -29,6 +29,12 @@
       "name": "Magic Keyboard",
       "price": "1250",
       "category": "Computer Attachment"
+    },
+    {
+      "name": "Masa lambasi",
+      "price": "150",
+      "category": "ev araçları",
+      "id": 6
     }
   ]
 }

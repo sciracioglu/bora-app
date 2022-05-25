@@ -12,6 +12,10 @@ function ProductForm(props) {
     const inputRef = useRef()
 
     useEffect(() => {
+        console.log('product form rendered')
+    })
+
+    useEffect(() => {
         inputRef.current.focus()
 
     }, [])

@@ -1,8 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Combobox} from "react-widgets/cjs";
 import "react-widgets/styles.css";
+import {HttpGet, HttpGet2, HttpInsert2, HttpUpdate2} from "../service/coreService";
 
 function UserForm(props) {
+    const id=props.id
+    const onIdChange=props.onIdChange
+    const dispatch=props.dispatch
     const [error, setError] = useState(false)
     const [nameValue, setName] = useState('')
     const [surnameValue, setSurname] = useState('')
@@ -17,6 +21,7 @@ function UserForm(props) {
         setName('')
         setSurname('')
         setAgeValue(20)
+        onIdChange(null)
     }
     const Save = () => {
         if (!validateForm()){
@@ -29,10 +34,35 @@ function UserForm(props) {
         let data = {
             name:nameValue,
             surname:surnameValue,
-            age: ageValue
+            age: ageValue,
+            products:userProduct.current,
+            id:id,
         }
 
-        console.table(data)
+       // console.table(data)
+
+        if(id != null){
+            HttpUpdate2(`person/${id}`,data).then(result=>{
+                dispatch({
+                    type:"UPDATE_USER",
+                    payload:data
+                })
+            }).catch(err=>{
+                console.log("Update user error:"+err)
+            })
+        } else {
+            HttpInsert2(`person`,data).then(response=>{
+                if(response.status == 201){
+                    dispatch({
+                        type:"ADD_USER",
+                        payload:response.data
+                    })
+                }
+            }).catch(err=>{
+                console.log("Insert user error:"+err)
+            })
+        }
+
         Cancel()
     }
 
@@ -40,6 +70,21 @@ function UserForm(props) {
         refInput.current.focus();
         setAgeList(Array.from({length: 63}, (_, i) => i + 18))
     }, [])
+
+    const userProduct = useRef([])
+
+    useEffect(()=>{
+        refInput.current.focus()
+        if(id!= null){
+            let response = HttpGet2(`person/${id}`).then(resonse =>{
+                const {name, surname, age} = resonse.data
+                setName(name)
+                setAgeValue(age)
+                setSurname(surname)
+                userProduct.current = resonse.data.products
+            })
+        }
+    },[id])
 
     return (
         <div className="col-mid-8 mb-4">
@@ -102,13 +147,18 @@ function UserForm(props) {
                                 </Combobox>
 
                             </div>
-                            <div className="form-group">
+                            <div className="form-group mt-3">
                                 <button type="button"
                                         className="btn btn-success"
                                         onClick={Save}
-
                                 >
-                                    Kaydet
+                                    { id == null ? 'Kaydet' : 'Guncelle'}
+                                </button>
+                                <button type="button"
+                                        className="btn btn-danger"
+                                        onClick={Cancel}
+                                >
+                                    Iptal
                                 </button>
                             </div>
                         </form>
