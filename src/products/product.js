@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
+import React, {memo, useState, useEffect} from 'react';
 import Modal from "../modal";
 import {HttpDelete, HttpGet2, HttpUpdate2} from "../service/coreService";
+function idPropsEquals(prevId, nextId){
+    return prevId.id === nextId.id
+}
 
 const Product = (props) => {
     const {name, category, price, id, onIdChange, dispatch} = props
     const editUser = () => {
         onIdChange(id)
     }
+    useEffect(() => {
+        console.log('product rendered')
+    })
     const [show, setShow] = useState(false)
     const delProduct = (id) => {
         if (id != null) {
@@ -17,7 +23,7 @@ const Product = (props) => {
                     person.products.forEach(product => {
                         if (product.id == id) {
                             person.products = person.products.filter(prod => prod.id != id)
-                            HttpUpdate2(`person/${id}`, person).then(result => {
+                            HttpUpdate2(`person/${person.id}`, person).then(result => {
                                 return
                             })
                         }
@@ -67,4 +73,9 @@ const Product = (props) => {
     );
 };
 
-export default Product;
+Product.defaultProps ={
+    name:"No Name",
+    price:"50"
+}
+
+export default memo(Product, idPropsEquals);

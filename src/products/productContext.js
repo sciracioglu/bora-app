@@ -1,13 +1,20 @@
 import React, {useEffect} from "react";
 import productReducer from "../reducer/productReducer";
-import {HttpGet} from "../service/coreService";
+import {HttpGet, HttpGlobalGet, UrlEnum} from "../service/coreService";
 
 const ProductContext = React.createContext()
 const initialState = {
     products: []
 }
-const getProducts = async () => {
+/*const getProducts = async () => {
     let response = await HttpGet(`products`)
+    if (response.status == 200) {
+        return response.data
+    } else return []
+}*/
+
+const getProducts = async () => {
+    let response = await HttpGlobalGet(UrlEnum.productUrl,`products`)
     if (response.status == 200) {
         return response.data
     } else return []

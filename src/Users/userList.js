@@ -2,17 +2,23 @@ import React, {useContext, useEffect, useState} from 'react';
 import UserForm from "./UserForm";
 import User from "./user";
 import {UserContext} from "./userContext";
-import {HttpGet} from "../service/coreService";
+import {Compare, HttpGet} from "../service/coreService";
 
 function UserList(props) {
     const [userId, setUserId] = useState()
     const [state, dispatch] = useContext(UserContext)
     const [allProductList, setAllProductList] = useState()
+
     useEffect(() => {
         HttpGet(`products`).then(response => {
             if (response.status == 200) {
                 console.table(response.data)
-                setAllProductList(response.data)
+                response.data.forEach(prod => {
+                    prod.name = prod.name ? prod.name : "No Name"
+                    prod.price = prod.price ? prod.price : "50"
+                })
+                let data = response.data.sort(Compare)
+                setAllProductList(data)
             }
         }).catch(err => {
             console.log(err)
@@ -39,6 +45,7 @@ function UserList(props) {
                         onIdChange={e=>{
                             setUserId(e)
                         }}
+                        setAllProductList={e=>setAllProductList(e)}
                     />
                 ))
 

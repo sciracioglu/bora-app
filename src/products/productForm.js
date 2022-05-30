@@ -1,6 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import {HttpGet, HttpInsert, HttpUpdate} from "../service/coreService";
-
+function idPropsEquals(prevId, nextId){
+    return prevId.id === nextId.id
+}
 function ProductForm(props) {
     const id = props.id
     const dispatch = props.dispatch
@@ -11,9 +13,11 @@ function ProductForm(props) {
     const [categoryValue, setCategoryValue] = useState('')
     const inputRef = useRef()
 
-    useEffect(() => {
-        console.log('product form rendered')
-    })
+
+
+    // useEffect(() => {
+    //     console.log('product form rendered')
+    // })
 
     useEffect(() => {
         inputRef.current.focus()
@@ -169,4 +173,4 @@ function ProductForm(props) {
     );
 }
 
-export default ProductForm;
+export default memo(ProductForm,idPropsEquals);

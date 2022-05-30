@@ -3,6 +3,23 @@ import axios from "axios";
 const baseUrl = "http://localhost:1938/"
 const baseUrl2 = "http://localhost:1980/"
 
+
+const UrlEnum = {
+    productUrl: "http://localhost:1938/",
+    userUrl: "http://localhost:1980/"
+}
+
+const HttpGlobalGet = async (root, url) => {
+    try {
+        let response = await axios.get(root + url)
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error("Unable to get data from product service!")
+    }
+}
+
 const HttpGet = async (url) => {
     console.log(baseUrl)
     console.log(url)
@@ -95,9 +112,24 @@ const HttpDelete2 = async (url, id) => {
 }
 
 const Compare = (a, b) => {
-    const aPrice = Number(a.price.replace(/[^0-9.-]+/g, ""));
-    const bPrice = Number(b.price.replace(/[^0-9.-]+/g, ""));
-    return aPrice - bPrice
+    console.log(a.price)
+    if (a.price && b.price) {
+        const aPrice = Number(a.price.replace(/[^0-9.-]+/g, ""));
+        const bPrice = Number(b.price.replace(/[^0-9.-]+/g, ""));
+        return aPrice - bPrice
+    }
 }
 
-export {HttpGet, HttpGet2, HttpInsert, HttpUpdate, HttpUpdate2, HttpDelete, HttpInsert2, HttpDelete2, Compare}
+export {
+    HttpGet,
+    HttpGet2,
+    HttpInsert,
+    HttpUpdate,
+    HttpUpdate2,
+    HttpDelete,
+    HttpInsert2,
+    HttpDelete2,
+    Compare,
+    HttpGlobalGet,
+    UrlEnum
+}

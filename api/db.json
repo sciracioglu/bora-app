@@ -3,7 +3,7 @@
     {
       "name": "Macbook Pro 16",
       "price": "72500",
-      "category": "LapTop",
+      "category": "Lap Top",
       "id": 1
     },
     {
@@ -31,10 +31,44 @@
       "category": "Computer Attachment"
     },
     {
-      "name": "Masa lambasi",
-      "price": "150",
-      "category": "ev araçları",
-      "id": 6
+      "category": "elektrik",
+      "id": 7
+    },
+    {
+      "name": "aa",
+      "category": "bb",
+      "price": "33",
+      "id": 8
+    },
+    {
+      "name": "aa",
+      "category": "cc",
+      "price": "33",
+      "id": 9
+    },
+    {
+      "name": "222",
+      "category": "333",
+      "price": "4444",
+      "id": 10
+    },
+    {
+      "name": "444",
+      "category": "555",
+      "price": "666",
+      "id": 11
+    },
+    {
+      "name": "22",
+      "category": "11",
+      "price": "11",
+      "id": 12
+    },
+    {
+      "name": "aa",
+      "category": "bb",
+      "price": "33",
+      "id": 13
     }
   ]
 }

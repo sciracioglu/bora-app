@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import ProductListModal from "../products/productListModal";
 import {HttpDelete2} from "../service/coreService";
 import Modal from "../modal";
+import UserProductModal from "./userProductModal";
 
 function User(props) {
     const {
@@ -12,6 +13,7 @@ function User(props) {
         dispatch,
         products,
         allProductList,
+        setAllProductList,
         onIdChange
     } = props
 
@@ -24,7 +26,7 @@ function User(props) {
     })
     const [show, setShow] = useState(false)
     const [productList, setProductList] = useState([])
-
+    const [productModal, setProductModal] = useState(false)
     const [productListModal, setProductListModal] = useState(false)
     let UserProducts = []
 
@@ -68,6 +70,9 @@ function User(props) {
                            onClick={() => editUser()}/>
                         <i className="fas fa-list" style={{cursor: "pointer", padding: "10px"}}
                            onClick={() => setProductListModal(true)}/>
+                        <i className="fa fa-product-hunt" style={{cursor: "pointer", padding: "10px"}}
+                           onClick={() => setProductModal(true)}/>
+
                         <i className="fas fa-trash-alt" style={{cursor: "pointer", padding: "10px"}}
                            onClick={() => setShow(true)}/>
                     </h6>
@@ -98,6 +103,20 @@ function User(props) {
                     </table>
                 </div>
             </div>
+            <UserProductModal
+                show={productModal}
+                handleCancel={e => {
+                    setProductModal(false)
+                }}
+                dispatch={dispatch}
+                setAllProductList={e=>{
+                    setAllProductList(e)
+                }}
+                userModel={userModel.current}
+
+            >
+
+            </UserProductModal>
             <ProductListModal
                 show={productListModal}
                 dispatch={dispatch}

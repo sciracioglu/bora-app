@@ -1,4 +1,4 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import ProductForm from "./productForm";
 import Product from "./product";
 import {ProductContext} from "./productContext";
@@ -6,7 +6,9 @@ import {ProductContext} from "./productContext";
 function ProductList(props) {
     const [productId, setProductId] = useState()
     const [state, dispatch] = useContext(ProductContext)
-
+    // useEffect(() => {
+    //     console.log('product list rendered')
+    // })
     return (
         <div>
             <ProductForm onIdChange={e => setProductId(e)}
